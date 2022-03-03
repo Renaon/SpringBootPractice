@@ -8,7 +8,7 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private static int id;
+    private int id;
 
     @Column(name = "title")
     private String title;
@@ -24,12 +24,12 @@ public class Product {
     public Product() {
     }
 
-    public static int getId() {
-        return id;
+    public  int getId() {
+        return this.id;
     }
 
-    public static void setId(int id) {
-        Product.id = id;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {

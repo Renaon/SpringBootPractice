@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProductController {
     private final ProductService productService = new ProductService();
-    SessionFactory sessionFactory = new Configuration()
+//    SessionFactory sessionFactory = new Configuration()
+//            .addAnnotatedClass(Product.class)
+//            .buildSessionFactory();
+//    Session session = sessionFactory.getCurrentSession();
+        Session session = new Configuration()
             .addAnnotatedClass(Product.class)
-            .buildSessionFactory();
-    Session session = sessionFactory.getCurrentSession();
+            .buildSessionFactory()
+            .getCurrentSession();
 
     @GetMapping("/")
 //    @ResponseBody
