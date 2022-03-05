@@ -48,4 +48,9 @@ public class ProductController {
 //        productService.addProduct(product);
         return "success";
     }
+
+    @RequestMapping("/login")
+    public String login(Model model) {
+        return "login";
+    }
 }
