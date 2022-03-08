@@ -16,14 +16,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ProductController {
     private final ProductService productService = new ProductService();
-//    SessionFactory sessionFactory = new Configuration()
-//            .addAnnotatedClass(Product.class)
-//            .buildSessionFactory();
-//    Session session = sessionFactory.getCurrentSession();
-        Session session = new Configuration()
-            .addAnnotatedClass(Product.class)
-            .buildSessionFactory()
-            .getCurrentSession();
 
     @GetMapping("/")
 //    @ResponseBody
@@ -42,10 +34,7 @@ public class ProductController {
 
     @RequestMapping("/success")
     public String pcessAddress(@ModelAttribute("form") Product product){
-        session.beginTransaction();
-        session.save(product);
-        session.getTransaction().commit();
-//        productService.addProduct(product);
+        productService.addProduct(product);
         return "success";
     }
 

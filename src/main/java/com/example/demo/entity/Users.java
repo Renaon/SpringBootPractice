@@ -1,5 +1,7 @@
 package com.example.demo.entity;
 
+import com.example.demo.service.Autorisation;
+
 import javax.persistence.*;
 
 @Entity(name = "Users")
@@ -12,6 +14,12 @@ public class Users {
 
     @Column(name = "login")
     private String login;
+
+    @Column(name = "role_id")
+    private int role_id;
+
+    @Column(name = "password")
+    private String password;
 
     public Integer getId() {
         return id;
@@ -34,4 +42,10 @@ public class Users {
     }
 
     public Users(){}
+
+    public Users(String login, String role, String password) {
+        this.login = login;
+        this.role_id = Autorisation.getRole(role);
+        this.password = password;
+    }
 }
