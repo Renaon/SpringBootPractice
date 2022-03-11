@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+    <!-- a SessionFactory instance listed as /jndi/name -->
+    <session-factory>
+        <mapping class="com.example.demo.entity.Product"/>
+        <mapping class="com.example.demo.entity.Role"/>
+        <mapping class="com.example.demo.entity.ShopCart"/>
+        <mapping class="com.example.demo.entity.Users"/>
+    </session-factory>
+
+</hibernate-configuration>
