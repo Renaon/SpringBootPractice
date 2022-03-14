@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductController {
@@ -33,4 +32,9 @@ public class ProductController {
         productService.addProduct(product);
         return "success";
     }
+
+//    @RequestMapping("/login")
+//    public String login(Model model) {
+//        return "login";
+//    }
 }

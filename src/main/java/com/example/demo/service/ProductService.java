@@ -1,17 +1,26 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.Product;
+import org.hibernate.Session;
+import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.sql.*;
+import java.util.List;
 
 @Service
 public class ProductService {
     private static Connection connection;
     private static Statement stmt;
     private PreparedStatement preparedStatement;
+    private Session session;
 
     public ProductService(){
         try{
@@ -22,18 +31,9 @@ public class ProductService {
     }
 
     public void addProduct(Product product){
-        try {
-            if (!connection.isClosed()) {
-                preparedStatement = connection.prepareStatement(
-                        "insert into \"Products\"(price,title) values (?,?);"
-                );
-                preparedStatement.setInt(1, product.getPrice());
-                preparedStatement.setString(2, product.getTitle());
-                preparedStatement.executeUpdate();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        session.beginTransaction();
+        session.save(product);
+        session.getTransaction().commit();
     }
 
     private int getSize() {
@@ -56,23 +56,17 @@ public class ProductService {
     }
 
     public Product[] getAll() {
-        Product[] products = new Product[getSize()];
-        int count = 0;
-        try {
-            if (!connection.isClosed()) {
-                preparedStatement = connection.prepareStatement(
-                        "select price, title from \"Products\";"
-                );
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    String tmpTitle = rs.getString("title");
-                    int tmpPrice = rs.getInt("price");
-                    products[count] = new Product(tmpTitle,tmpPrice);
-                    count++;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        session.beginTransaction();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Product.class);
+        Root root = cq.from(Product.class);
+        CriteriaQuery all = cq.select(root);
+
+        TypedQuery allQuery = session.createQuery(all);
+        List<Product> productList = allQuery.getResultList();
+        Product[] products = new Product[productList.size()+1];
+        for (Product product : productList){
+            products[product.getId()] = product;
         }
         return products;
     }
@@ -80,8 +74,10 @@ public class ProductService {
     @Bean
     @Scope("session")
     private void connect() throws SQLException {
-        connection = DriverManager.getConnection("jdbc:sqlite:src/main/resources/HW3ProductsRepos.db");
-        stmt = connection.createStatement();
+        this.session = new Configuration()
+                .addAnnotatedClass(Product.class)
+                .buildSessionFactory()
+                .getCurrentSession();
     }
 
 }

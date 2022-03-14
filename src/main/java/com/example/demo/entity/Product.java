@@ -1,14 +1,36 @@
 package com.example.demo.entity;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-import org.springframework.data.relational.core.mapping.Table;
+import javax.persistence.*;
 
-@EntityScan
-@Table("Product")
+@Entity(name = "Products")
+@Table(name = "Products")
 public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @Column(name = "title")
     private String title;
+
+    @Column(name = "price")
     private int price;
-    private static int id;
+
+    public Product(String title, int price) {
+        this.title = title;
+        this.price = price;
+    }
+
+    public Product() {
+    }
+
+    public  int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getTitle() {
         return title;
@@ -26,15 +48,8 @@ public class Product {
         this.price = price;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public Product(){
-        Product.id++;
-    }
-    public Product(String title, int price){
-        this.title = title;
-        this.price = price;
+    @Override
+    public String toString() {
+        return String.format("Item [id = %id, title = '%s', price = %d]", id,title,price);
     }
 }
