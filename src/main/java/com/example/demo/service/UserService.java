@@ -4,8 +4,6 @@ import com.example.demo.entity.Role;
 import com.example.demo.entity.Users;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -15,10 +13,7 @@ import javax.persistence.NoResultException;
 
 @Service
 public class UserService implements UserDetailsService {
-    private Session session = new Configuration()
-            .addAnnotatedClass(Users.class)
-            .buildSessionFactory()
-            .getCurrentSession();
+    private Session session;
 
     public int getRole(String role){
         session = new Configuration()
@@ -33,7 +28,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public Users loadUserByUsername(String username) throws UsernameNotFoundException {
+        session = new Configuration()
+                .addAnnotatedClass(Users.class)
+                .buildSessionFactory()
+                .getCurrentSession();
         session.beginTransaction();
         Users user;
         try {
@@ -51,8 +50,14 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    public User findUserById(int id){
-        return session.get(User.class, id);
+    public Users findUserById(int id){
+        session = new Configuration()
+            .addAnnotatedClass(Users.class)
+            .buildSessionFactory()
+            .getCurrentSession();
+
+        session.beginTransaction();
+        return session.get(Users.class, id);
     }
 
     public boolean saveUser(Users user) {
@@ -60,6 +65,10 @@ public class UserService implements UserDetailsService {
             loadUserByUsername(user.getLogin());
             return false;
         } catch (UsernameNotFoundException  e) {
+            session = new Configuration()
+                    .addAnnotatedClass(Users.class)
+                    .buildSessionFactory()
+                    .getCurrentSession();
             session.save(user);
             session.getTransaction().commit();
             return true;
@@ -67,15 +76,33 @@ public class UserService implements UserDetailsService {
     }
 
     public boolean deleteUser(int id) {
-        if (findUserById(id) != null){
-            session.remove(findUserById(id));
+        session = new Configuration()
+                .addAnnotatedClass(Users.class)
+                .buildSessionFactory()
+                .getCurrentSession();
+        session.beginTransaction();
+        Users del = findUserById(id);
+        if (del != null){
+            session.remove(del);
+            session.getTransaction().commit();
             return true;
         }
         else return false;
     }
 
+    public boolean loginUser(Users user){
+        try {
+            loadUserByUsername(user.getLogin());
+            return true;
+        }catch (UsernameNotFoundException e) {
+            return false;
+        }
+    }
+
     public static void main(String[] args) {
-        new UserService().saveUser(new Users("huita"));
+        UserService us = new UserService();
+        Users user =  us.loadUserByUsername("Lennon");
+        us.deleteUser(user.getId());
     }
 
 }

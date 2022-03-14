@@ -10,9 +10,13 @@ public class ShopCart {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
     @Column(name = "user_id")
     private Integer user_id;
 
+    @ManyToMany
+    @PrimaryKeyJoinColumn
     @Column(name = "product_id")
     private Integer product_id;
 

@@ -18,6 +18,8 @@ public class Users implements UserDetails {
     @Column(name = "login")
     private String login;
 
+    @OneToOne
+    @PrimaryKeyJoinColumn
     @Column(name = "role_id")
     private int role_id;
 
@@ -50,11 +52,11 @@ public class Users implements UserDetails {
 
     public Users(){}
 
-    public Users(String login, String role, String password) {
-        this.login = login;
-        this.role_id = new UserService().getRole(role);
-        this.password = password;
-    }
+//    public Users(String login, String role, String password) {
+//        this.login = login;
+//        this.role_id = new UserService().getRole(role);
+//        this.password = password;
+//    }
 
     public Users(String login, String password) {
         this.login = login;

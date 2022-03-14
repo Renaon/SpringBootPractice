@@ -20,7 +20,7 @@
     <br>
     <form:input path="password" type='text' class="form-control" placeholder="password"/>
     <br>
-    <input type="submit" value="Submit" class="btn btn-default"/>
+    <input type="submit" value="Register" class="btn btn-default"/>
 </form:form>
  </div>
  </div>
