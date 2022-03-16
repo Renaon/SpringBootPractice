@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "ShopCart")
@@ -18,13 +19,13 @@ public class ShopCart {
     @ManyToMany
     @PrimaryKeyJoinColumn
     @Column(name = "product_id")
-    private Integer product_id;
+    private List<Product> product_id;
 
     public ShopCart() {
 
     }
 
-    public ShopCart(Integer user_id, Integer product_id) {
+    public ShopCart(Integer user_id, List<Product> product_id) {
         this.user_id = user_id;
         this.product_id = product_id;
     }
@@ -45,11 +46,11 @@ public class ShopCart {
         this.user_id = user_id;
     }
 
-    public Integer getProduct_id() {
+    public List<Product> getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(Integer product_id) {
+    public void setProduct_id(List<Product> product_id) {
         this.product_id = product_id;
     }
 }

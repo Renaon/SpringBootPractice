@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,7 +19,7 @@ public class Users implements UserDetails {
 
     @OneToOne
     @PrimaryKeyJoinColumn
-    @Column(name = "role_id")
+    @JoinColumn(name = "role_id")
     private int role_id;
 
     @Column(name = "password")
