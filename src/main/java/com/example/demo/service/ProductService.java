@@ -1,5 +1,6 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -76,6 +77,7 @@ public class ProductService {
     private void connect() throws SQLException {
         this.session = new Configuration()
                 .addAnnotatedClass(Product.class)
+                .addAnnotatedClass(Category.class)
                 .buildSessionFactory()
                 .getCurrentSession();
     }
