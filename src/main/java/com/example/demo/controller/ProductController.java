@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
 import com.example.demo.service.ProductService;
 import org.springframework.stereotype.Controller;
@@ -14,10 +15,10 @@ public class ProductController {
 
     @GetMapping("/")
 //    @ResponseBody
-    public String getAll(Model model){
+    public String getIndex(Model model){
         Product[] products = productService.getAll();
         model.addAttribute("products", products);
-        return "store";
+        return "index";
     }
 
     @GetMapping("/add")
@@ -33,8 +34,17 @@ public class ProductController {
         return "success";
     }
 
-//    @RequestMapping("/login")
-//    public String login(Model model) {
-//        return "login";
-//    }
+    @GetMapping("/store")
+    public String getAll(Model model){
+        Product[] products = productService.getAll();
+        model.addAttribute("products", products);
+        return "store";
+    }
+
+    @GetMapping("/categories")
+    public String getCategories(Model model){
+        Category[] categories = productService.getCategories();
+        model.addAttribute("categories", categories);
+        return "categories";
+    }
 }

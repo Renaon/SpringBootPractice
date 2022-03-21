@@ -1,34 +1,33 @@
 <%@page pageEncoding="UTF-8" %>
-<%@ include file="header.jsp" %>
-
 
 <!DOCTYPE html>
-<html>
-<head>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta charset="utf-8">
-      <meta name="keywords" content="Store">
-      <meta name="description" content="">
-      <meta name="page_type" content="np-template-header-footer-from-plugin">
-      <title>Вход</title>
-      <link rel="stylesheet" href="nicepage.css" media="screen">
-  <link rel="stylesheet" href="Главная.css" media="screen">
-      <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
-      <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
-      <meta name="generator" content="Nicepage 4.6.5, nicepage.com">
-      <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
-
-
-      <script type="application/ld+json">{
-  		"@context": "http://schema.org",
-  		"@type": "Organization",
-  		"name": "",
-  		"logo": "images/rimworld-logo-6.png"
-  }</script>
-      <meta name="theme-color" content="#478ac9">
-      <meta property="og:title" content="Главная">
-      <meta property="og:type" content="website">
-</head>
+<html style="font-size: 16px;">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Store">
+    <meta name="description" content="">
+    <meta name="page_type" content="np-template-header-footer-from-plugin">
+    <title>Категории</title>
+    <link rel="stylesheet" href="nicepage.css" media="screen">
+<link rel="stylesheet" href="Главная.css" media="screen">
+    <script class="u-script" type="text/javascript" src="jquery.js" defer=""></script>
+    <script class="u-script" type="text/javascript" src="nicepage.js" defer=""></script>
+    <meta name="generator" content="Nicepage 4.6.5, nicepage.com">
+    <link id="u-theme-google-font" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i|Open+Sans:300,300i,400,400i,500,500i,600,600i,700,700i,800,800i">
+    
+    
+    <script type="application/ld+json">{
+		"@context": "http://schema.org",
+		"@type": "Organization",
+		"name": "",
+		"logo": "images/rimworld-logo-6.png"
+}</script>
+    <meta name="theme-color" content="#478ac9">
+    <meta property="og:title" content="Главная">
+    <meta property="og:type" content="website">
+  </head>
+  
   <header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="400" data-image-height="400">
           <img src="images/rimworld-logo-6.png" class="u-logo-image u-logo-image-1">
@@ -64,18 +63,33 @@
           </div>
         </nav>
       </div>
-</header>
-
-
-<h1>Add a product </h1>
-<form:form action="success" modelAttribute="product">
-    <form:input path="title" type='text'/>
-    <br>
-    <form:input path="price" type='text'/>
-    <br>
-    <input type="submit" value="Submit" />
-</form:form>
-
-</body>
-
-<%@ include file="footer.jsp" %>
+	</header>
+	
+	<section class="u-clearfix u-section-1" id="sec-ec93">
+      <div class="u-clearfix u-sheet u-sheet-1">
+		
+		<c:forEach var="item" items="${categories}">
+		<a href="/categories?category="${item.name} class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-1 u-radius-6 u-btn-1"><c:>${item.name}</c:></a>    
+            <br>
+        </c:forEach>
+      
+	  </div>
+    </section>
+    
+    
+    <footer class="u-align-center u-clearfix u-footer u-grey-80 u-footer" id="sec-fe3e"><div class="u-clearfix u-sheet u-sheet-1">
+        <p class="u-small-text u-text u-text-variant u-text-1">Пример текста. Кликните, чтобы выбрать текстовый блок. Кликните еще раз или сделайте двойной клик, чтобы начать редактирование текста.</p>
+      </div></footer>
+    <section class="u-backlink u-clearfix u-grey-80">
+      <a class="u-link" href="https://nicepage.com/website-templates" target="_blank">
+        <span>Website Templates</span>
+      </a>
+      <p class="u-text">
+        <span>created with</span>
+      </p>
+      <a class="u-link" href="" target="_blank">
+        <span>Website Builder Software</span>
+      </a>. 
+    </section>
+  </body>
+</html>

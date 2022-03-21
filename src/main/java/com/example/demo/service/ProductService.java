@@ -57,6 +57,11 @@ public class ProductService {
     }
 
     public Product[] getAll() {
+        try {
+            connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         session.beginTransaction();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(Product.class);
@@ -69,7 +74,30 @@ public class ProductService {
         for (Product product : productList){
             products[product.getId()] = product;
         }
+        session.getTransaction().commit();
         return products;
+    }
+
+    public Category[] getCategories(){
+        try {
+            connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        session.beginTransaction();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Category.class);
+        Root root = cq.from(Category.class);
+        CriteriaQuery all = cq.select(root);
+
+        TypedQuery allQuery = session.createQuery(all);
+        List<Category> categoryList = allQuery.getResultList();
+        Category[] categories = new Category[categoryList.size()+1];
+        for (Category i : categoryList){
+            categories[i.getId()] = i;
+        }
+        session.getTransaction().commit();
+        return categories;
     }
 
     @Bean

@@ -1,4 +1,3 @@
-<%@page pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
@@ -26,8 +25,7 @@
     <meta property="og:title" content="Главная">
     <meta property="og:type" content="website">
   </head>
-  
-  <header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
+  <body class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="400" data-image-height="400">
           <img src="images/rimworld-logo-6.png" class="u-logo-image u-logo-image-1">
         </a>
@@ -41,17 +39,17 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="" style="padding: 10px 20px;">Главная</a>
-			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="categories" style="padding: 10px 20px;">Категории</a>
-			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
-			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Войти.html" style="padding: 10px 20px;">Войти</a>
-			</li></ul>
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Категории.html" style="padding: 10px 20px;">Категории</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Войти.html" style="padding: 10px 20px;">Войти</a>
+</li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
-                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/" style="padding: 10px 20px;">Главная</a>
+                <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Главная.html" style="padding: 10px 20px;">Главная</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Категории.html" style="padding: 10px 20px;">Категории</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Войти.html" style="padding: 10px 20px;">Войти</a>
@@ -61,17 +59,14 @@
             <div class="u-black u-menu-overlay u-opacity u-opacity-70"></div>
           </div>
         </nav>
-      </div>
-	</header>
-	<body data-home-page="/" data-home-page-title="Главная" class="u-body u-xl-mode" modelAttribute="products">
+      </div></header>
     <section class="u-clearfix u-section-1" id="sec-4840">
       <div class="u-clearfix u-sheet u-sheet-1">
-        <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">
-		<h1>Store</h1>
+        <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">&lt;%@ include file="header.jsp" %&gt; <h1>Store</h1>
           <ul> Product     Price <br>
             <c:foreach var="item" items="${products}"> ${item.title}   ${item.price} <br>
             </c:foreach>
-          </ul>
+          </ul> &lt;%@ include file="footer.jsp" %&gt;
         </div>
       </div>
     </section>
