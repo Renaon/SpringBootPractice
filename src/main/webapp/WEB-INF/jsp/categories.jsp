@@ -70,7 +70,7 @@
       <div class="u-clearfix u-sheet u-sheet-1">
 		
 		<c:forEach var="item" items="${categories}">
-		<a href="categories?category=${item.name}" class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-1 u-radius-6 u-btn-1">${item.name}</a>    
+		<a href="category?category=${item.name}" class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-1 u-radius-6 u-btn-1">${item.name}</a>    
         </c:forEach>
       
 	  </div>
