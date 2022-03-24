@@ -1,4 +1,5 @@
 <%@page pageEncoding="UTF-8" %>
+<%@ include file="header.jsp" %>
 
 <!DOCTYPE html>
 <html style="font-size: 16px;">
@@ -27,7 +28,7 @@
     <meta property="og:title" content="Главная">
     <meta property="og:type" content="website">
   </head>
-  
+  <body class="u-body u-xl-mode" modelAttribute="categories">
   <header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="400" data-image-height="400">
           <img src="images/rimworld-logo-6.png" class="u-logo-image u-logo-image-1">
@@ -53,9 +54,9 @@
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/" style="padding: 10px 20px;">Главная</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Категории.html" style="padding: 10px 20px;">Категории</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/categories" style="padding: 10px 20px;">Категории</a>
 </li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Войти.html" style="padding: 10px 20px;">Войти</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/login" style="padding: 10px 20px;">Войти</a>
 </li></ul>
               </div>
             </div>
@@ -69,8 +70,7 @@
       <div class="u-clearfix u-sheet u-sheet-1">
 		
 		<c:forEach var="item" items="${categories}">
-		<a href="/categories?category="${item.name} class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-1 u-radius-6 u-btn-1"><c:>${item.name}</c:></a>    
-            <br>
+		<a href="categories?category=${item.name}" class="u-border-none u-btn u-btn-round u-button-style u-hover-palette-1-light-1 u-palette-2-light-1 u-radius-6 u-btn-1">${item.name}</a>    
         </c:forEach>
       
 	  </div>
