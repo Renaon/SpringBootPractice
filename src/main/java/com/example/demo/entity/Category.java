@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "products_categories")
+@Entity(name = "gb_Category")
 @Table(name = "gb_Category")
 public class Category {
     @Id

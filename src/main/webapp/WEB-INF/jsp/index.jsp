@@ -1,4 +1,7 @@
 <%@page pageEncoding="UTF-8" %>
+<%@ include file="header.jsp" %>
+
+
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
@@ -69,8 +72,8 @@
         <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">
 		<h1>Store</h1>
           <ul> Product     Price <br>
-            <c:foreach var="item" items="${products}"> ${item.title}   ${item.price} <br>
-            </c:foreach>
+            <c:forEach var="item" items="${products}"> ${item.title}   ${item.price} <br>
+            </c:forEach>
           </ul>
         </div>
       </div>

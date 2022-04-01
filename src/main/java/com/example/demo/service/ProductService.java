@@ -100,6 +100,24 @@ public class ProductService {
         return categories;
     }
 
+    public Product[] getProductsByCategory(String category){
+//        Product[] products = new Product[getSize()];
+        try {
+            connect();
+            session.beginTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+
+        return null;
+    }
+
+    public static void main(String[] args) {
+        new ProductService().getProductsByCategory("Гуманоиды");
+    }
+
     @Bean
     @Scope("session")
     private void connect() throws SQLException {

@@ -1,3 +1,6 @@
+<%@page pageEncoding="UTF-8" %>
+<%@ include file="header.jsp" %>
+
 <!DOCTYPE html>
 <html style="font-size: 16px;">
   <head>
@@ -25,7 +28,7 @@
     <meta property="og:title" content="Страница 1">
     <meta property="og:type" content="website">
   </head>
-  <body class="u-body u-xl-mode"><header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
+  <body class="u-body u-xl-mode" modelAttribute="category"><header class="u-clearfix u-header u-header" id="sec-9743"><div class="u-clearfix u-sheet u-sheet-1">
         <a href="https://nicepage.com" class="u-image u-logo u-image-1" data-image-width="400" data-image-height="400">
           <img src="images/rimworld-logo-6.png" class="u-logo-image u-logo-image-1">
         </a>

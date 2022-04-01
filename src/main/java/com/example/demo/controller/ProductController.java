@@ -50,7 +50,9 @@ public class ProductController {
     public String getCategoryProductString(Model model, @RequestParam String category){
         //это говно научилось выделять имя из запроса.
         // Тут бахнем страничку для получения товаров из категории и будет все в ажуре
-        System.out.println(category);
+        Product[] product = productService.getProductsByCategory(category);
+
+        System.out.println(product);
         return "index";
     }
 }
