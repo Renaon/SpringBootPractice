@@ -42,11 +42,11 @@
             </a>
           </div>
           <div class="u-custom-menu u-nav-container">
-            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Главная.html" style="padding: 10px 20px;">Главная</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Категории.html" style="padding: 10px 20px;">Категории</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Войти.html" style="padding: 10px 20px;">Войти</a>
-</li></ul>
+            <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Главная</a>
+			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="categories" style="padding: 10px 20px;">Категории</a>
+			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="add" style="padding: 10px 20px;">Добавить товар</a>
+			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="login" style="padding: 10px 20px;">Войти</a>
+			</li></ul>
           </div>
           <div class="u-custom-menu u-nav-container-collapse">
             <div class="u-black u-container-style u-inner-container-layout u-opacity u-opacity-95 u-sidenav">
@@ -65,8 +65,11 @@
       </div></header>
     <section class="u-clearfix u-grey-5 u-section-1" id="sec-2cea">
       <div class="u-clearfix u-sheet u-valign-middle u-sheet-1">
-        <h3 class="u-text u-text-1">********какая-то категория********</h3>
-        <p class="u-text u-text-2">********************товары оттудова********************</p>
+        <p class="u-text u-text-2">
+			<c:forEach var="item" items="${products}"> 
+				${item.title}   ${item.price} <br>
+            </c:forEach>
+		</p>
       </div>
     </section>
     

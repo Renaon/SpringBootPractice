@@ -51,8 +51,7 @@ public class ProductController {
         //это говно научилось выделять имя из запроса.
         // Тут бахнем страничку для получения товаров из категории и будет все в ажуре
         Product[] product = productService.getProductsByCategory(category);
-
-        System.out.println(product);
-        return "index";
+        model.addAttribute("products", product);
+        return "category";
     }
 }

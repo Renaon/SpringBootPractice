@@ -44,8 +44,9 @@
           </div>
           <div class="u-custom-menu u-nav-container">
             <ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="" style="padding: 10px 20px;">Главная</a>
+			<ul class="u-nav u-unstyled u-nav-1"><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="/" style="padding: 10px 20px;">Главная</a>
 			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="categories" style="padding: 10px 20px;">Категории</a>
-			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
+			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="add" style="padding: 10px 20px;">Добавить товар</a>
 			</li><li class="u-nav-item"><a class="u-button-style u-nav-link u-text-active-palette-1-base u-text-hover-palette-2-base" href="Войти.html" style="padding: 10px 20px;">Войти</a>
 			</li></ul>
           </div>
@@ -54,9 +55,9 @@
               <div class="u-inner-container-layout u-sidenav-overflow">
                 <div class="u-menu-close"></div>
                 <ul class="u-align-center u-nav u-popupmenu-items u-unstyled u-nav-2"><li class="u-nav-item"><a class="u-button-style u-nav-link" href="/" style="padding: 10px 20px;">Главная</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Категории.html" style="padding: 10px 20px;">Категории</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Контакты.html" style="padding: 10px 20px;">Контакты</a>
-</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="Войти.html" style="padding: 10px 20px;">Войти</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="categories" style="padding: 10px 20px;">Категории</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="add" style="padding: 10px 20px;">Добавить товар</a>
+</li><li class="u-nav-item"><a class="u-button-style u-nav-link" href="login" style="padding: 10px 20px;">Войти</a>
 </li></ul>
               </div>
             </div>
@@ -72,6 +73,8 @@
     <form:input path="title" type='text'/>
     <br>
     <form:input path="price" type='text'/>
+    <br>
+	<form:input path="products_categories" type='text' placeholder="Раздел"/>
     <br>
     <input type="submit" value="Submit" />
 </form:form>
