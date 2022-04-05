@@ -31,6 +31,7 @@ public class UserService implements UserDetailsService {
     public Users loadUserByUsername(String username) throws UsernameNotFoundException {
         session = new Configuration()
                 .addAnnotatedClass(Users.class)
+                .addAnnotatedClass(Role.class)
                 .buildSessionFactory()
                 .getCurrentSession();
         session.beginTransaction();

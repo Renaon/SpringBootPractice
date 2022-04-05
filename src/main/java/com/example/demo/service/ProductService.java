@@ -1,19 +1,24 @@
 package com.example.demo.service;
 
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.transaction.Transactional;
 import java.sql.*;
 import java.util.List;
+
+import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
 @Service
 public class ProductService {
@@ -31,7 +36,12 @@ public class ProductService {
     }
 
     public void addProduct(Product product){
-        session.beginTransaction();
+        try {
+            connect();
+            session.beginTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         session.save(product);
         session.getTransaction().commit();
     }
@@ -56,6 +66,11 @@ public class ProductService {
     }
 
     public Product[] getAll() {
+        try {
+            connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         session.beginTransaction();
         CriteriaBuilder cb = session.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery(Product.class);
@@ -68,6 +83,60 @@ public class ProductService {
         for (Product product : productList){
             products[product.getId()] = product;
         }
+        session.getTransaction().commit();
+        return products;
+    }
+
+    public Category[] getCategories(){
+        try {
+            connect();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        session.beginTransaction();
+        CriteriaBuilder cb = session.getCriteriaBuilder();
+        CriteriaQuery cq = cb.createQuery(Category.class);
+        Root root = cq.from(Category.class);
+        CriteriaQuery all = cq.select(root);
+
+        TypedQuery allQuery = session.createQuery(all);
+        List<Category> categoryList = allQuery.getResultList();
+        Category[] categories = new Category[categoryList.size()+1];
+        for (Category i : categoryList){
+            categories[i.getId()] = i;
+        }
+        session.getTransaction().commit();
+        return categories;
+    }
+
+    @Transactional(REQUIRES_NEW)
+    public Product[] getProductsByCategory(String category){
+        try {
+            connect();
+            session.beginTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        String stringQuery =
+                "SELECT " +
+                        "\tProducts.id\n" +
+                        "FROM\n" +
+                        "\tProducts\n" +
+                        "\tINNER JOIN\n" +
+                        "\tgb_Category\n" +
+                        "\tINNER JOIN\n" +
+                        "\tproducts_categories\n" +
+                        "\tON \n" +
+                        "\t\tgb_Category.id = products_categories.category_id AND\n" +
+                        "\t\tProducts.id = products_categories.product_id\n" +
+                        "WHERE\n" +
+                        "\tname = '" + category + "'";
+        Query query = session.createSQLQuery(stringQuery);
+        List<Integer> result = query.getResultList();
+        Product[] products = new Product[result.size()];
+        for (int i = 0; i <result.size(); i++){
+            products[i] = session.get(Product.class, result.get(i));
+        }
         return products;
     }
 
@@ -76,6 +145,7 @@ public class ProductService {
     private void connect() throws SQLException {
         this.session = new Configuration()
                 .addAnnotatedClass(Product.class)
+                .addAnnotatedClass(Category.class)
                 .buildSessionFactory()
                 .getCurrentSession();
     }
