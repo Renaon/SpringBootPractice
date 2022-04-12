@@ -20,7 +20,8 @@ public class Category {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name = "products_categories",
             joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
+            inverseJoinColumns = @JoinColumn(name = "product_id"),
+            uniqueConstraints = @UniqueConstraint(columnNames = {"category_id", "category_id"}))
     private List<Product> products = new ArrayList<>();
 
     public List<Product> getProducts() {

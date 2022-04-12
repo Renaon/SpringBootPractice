@@ -72,7 +72,7 @@
         <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">
 		<h1>Store</h1>
           <ul> Product     Price <br>
-            <c:forEach var="item" items="${products}"> ${item.title}   ${item.price} <br>
+            <c:forEach var="item" items="${products}"> ${item.title}   ${item.price}	<a href="/productdel?id=${item.id}" class="u-button-style u-nav-link">del</a> <br>
             </c:forEach>
           </ul>
         </div>
