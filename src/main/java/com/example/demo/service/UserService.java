@@ -21,7 +21,8 @@ public class UserService implements UserDetailsService {
                 .buildSessionFactory()
                 .getCurrentSession();
         session.beginTransaction();
-        Integer roleFromDB = session.createQuery("select id from role where name='" + role + "'", Integer.class).getSingleResult();
+        Integer roleFromDB = session.createQuery("select id from role where name=:role", Integer.class)
+                .setParameter("role", role).getSingleResult();
 //        int result = roleFromDB.getId();
         session.getTransaction().commit();
         return roleFromDB;
@@ -38,7 +39,8 @@ public class UserService implements UserDetailsService {
         Users user;
         try {
             Integer usId = session
-                    .createQuery("select id from Users where login='" + username + "'", Integer.class).getSingleResult();
+                    .createQuery("select id from Users where login=:username", Integer.class)
+                    .setParameter("username", username).getSingleResult();
             user = session.get(Users.class, usId);
             session.getTransaction().commit();
         } catch (NoResultException e) {

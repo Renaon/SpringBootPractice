@@ -123,8 +123,8 @@ public class ProductService {
                         "\tON \n" +
                         "\t\tProducts.category_id = gb_Category.id\n" +
                         "WHERE\n" +
-                        "\tgb_Category.name = '" + category + "'";
-        Query query = session.createSQLQuery(stringQuery);
+                        "\tgb_Category.name = :category";
+        Query query = session.createSQLQuery(stringQuery).setParameter("category", category);
         List<Integer> result = query.getResultList();
         List<Product> products = new ArrayList<>();
         for (Integer i: result){
@@ -143,8 +143,9 @@ public class ProductService {
 //            e.printStackTrace();
 //        }
         try {
-            String stringQuery = "SELECT id FROM gb_Category WHERE name='" + name + "'";
-            Integer id = session.createQuery(stringQuery, Integer.class).getSingleResult();
+            String stringQuery = "SELECT id FROM gb_Category WHERE name=:name";
+            Integer id = session.createQuery(stringQuery, Integer.class)
+                    .setParameter("name", name).getSingleResult();
             return id;
         } catch (NoResultException e) {
             return 0;
