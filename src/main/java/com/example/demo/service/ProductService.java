@@ -9,6 +9,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -16,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
@@ -42,8 +45,31 @@ public class ProductService {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        session.save(product);
+        int  id = getCategoryIdByName(product.getCategory().getName());
+        if(id == 0) session.saveOrUpdate(product);
+        else {
+            Category exists =  session.get(Category.class, id);
+            product.setCategory(exists);
+            session.saveOrUpdate(product);
+        }
         session.getTransaction().commit();
+        session.close();
+    }
+
+    public void dropProduct(Integer productId){
+        try {
+            connect();
+            session.beginTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Product tmp = session.get(Product.class, productId);
+        Category tmpCategory = new Category("temp");
+        session.save(tmpCategory);
+        tmp.setCategory(tmpCategory);
+        session.remove(tmp);
+        session.getTransaction().commit();
+        session.close();
     }
 
     private int getSize() {
@@ -65,7 +91,7 @@ public class ProductService {
         return Integer.parseInt(result);
     }
 
-    public Product[] getAll() {
+    public List<Product> getAll() {
         try {
             connect();
         } catch (SQLException e) {
@@ -79,15 +105,16 @@ public class ProductService {
 
         TypedQuery allQuery = session.createQuery(all);
         List<Product> productList = allQuery.getResultList();
-        Product[] products = new Product[productList.size()+1];
-        for (Product product : productList){
-            products[product.getId()] = product;
-        }
+//        Product[] products = new Product[productList.size()+1];
+//        for (Product product : productList){
+//            products[product.getId()] = product;
+//        }
         session.getTransaction().commit();
-        return products;
+        session.close();
+        return productList;
     }
 
-    public Category[] getCategories(){
+    public List<Category> getCategories(){
         try {
             connect();
         } catch (SQLException e) {
@@ -101,16 +128,17 @@ public class ProductService {
 
         TypedQuery allQuery = session.createQuery(all);
         List<Category> categoryList = allQuery.getResultList();
-        Category[] categories = new Category[categoryList.size()+1];
-        for (Category i : categoryList){
-            categories[i.getId()] = i;
-        }
+//        Category[] categories = new Category[categoryList.size()+1];
+//        for (Category i : categoryList){
+//            categories[i.getId()] = i;
+//        }
         session.getTransaction().commit();
-        return categories;
+        session.close();
+        return categoryList;
     }
 
     @Transactional(REQUIRES_NEW)
-    public Product[] getProductsByCategory(String category){
+    public List<Product> getProductsByCategory(String category){
         try {
             connect();
             session.beginTransaction();
@@ -118,26 +146,49 @@ public class ProductService {
             e.printStackTrace();
         }
         String stringQuery =
-                "SELECT " +
+                "SELECT\n" +
                         "\tProducts.id\n" +
                         "FROM\n" +
                         "\tProducts\n" +
                         "\tINNER JOIN\n" +
                         "\tgb_Category\n" +
-                        "\tINNER JOIN\n" +
-                        "\tproducts_categories\n" +
                         "\tON \n" +
-                        "\t\tgb_Category.id = products_categories.category_id AND\n" +
-                        "\t\tProducts.id = products_categories.product_id\n" +
+                        "\t\tProducts.category_id = gb_Category.id\n" +
                         "WHERE\n" +
-                        "\tname = '" + category + "'";
+                        "\tgb_Category.name = '" + category + "'";
         Query query = session.createSQLQuery(stringQuery);
         List<Integer> result = query.getResultList();
-        Product[] products = new Product[result.size()];
-        for (int i = 0; i <result.size(); i++){
-            products[i] = session.get(Product.class, result.get(i));
+        List<Product> products = new ArrayList<>();
+//        Product[] products = new Product[result.size()];
+//        for (int i = 0; i <result.size(); i++){
+//            products[i] = session.get(Product.class, result.get(i));
+//        }
+        for (Integer i: result){
+            products.add(session.get(Product.class, i));
         }
+        session.getTransaction().commit();
+        session.close();
         return products;
+    }
+
+    private Integer getCategoryIdByName(String name){
+//        try {
+//            connect();
+//            session.beginTransaction();
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+        try {
+            String stringQuery = "SELECT id FROM gb_Category WHERE name='" + name + "'";
+            Integer id = session.createQuery(stringQuery, Integer.class).getSingleResult();
+            return id;
+        } catch (NoResultException e) {
+            return 0;
+        }
+
+
+//        session.getTransaction().commit();
+
     }
 
     @Bean

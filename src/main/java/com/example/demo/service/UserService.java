@@ -70,7 +70,7 @@ public class UserService implements UserDetailsService {
                     .addAnnotatedClass(Users.class)
                     .buildSessionFactory()
                     .getCurrentSession();
-            session.save(user);
+            session.saveOrUpdate(user);
             session.getTransaction().commit();
             return true;
         }
