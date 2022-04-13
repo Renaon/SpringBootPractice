@@ -74,7 +74,7 @@
     <br>
     <form:input path="price" type='text'/>
     <br>
-	<form:input path="products_categories" type='text' placeholder="Раздел"/>
+	<form:input path="category" type='text' placeholder="Раздел"/>
     <br>
     <input type="submit" value="Submit" />
 </form:form>

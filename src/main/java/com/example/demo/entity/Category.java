@@ -14,15 +14,11 @@ public class Category {
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "category_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"category_id", "category_id"}))
-    private List<Product> products = new ArrayList<>();
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
 
     public List<Product> getProducts() {
         return products;
@@ -54,7 +50,6 @@ public class Category {
     public void setName(String name) {
         this.name = name;
     }
-
 
 
 }

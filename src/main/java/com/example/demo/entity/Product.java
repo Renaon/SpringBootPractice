@@ -20,19 +20,16 @@ public class Product {
     @Column(name = "price")
     private int price;
 
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinTable(name = "products_categories",
-            joinColumns = @JoinColumn(name = "product_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"),
-            uniqueConstraints = @UniqueConstraint(columnNames = {"product_id", "category_id"}))
-    private List<Category> products_categories = new ArrayList<>();
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-    public List<Category> getProducts_categories() {
-        return products_categories;
+    public Category getCategory() {
+        return category;
     }
 
-    public void setProducts_categories(List<Category> products_categories) {
-        this.products_categories = products_categories;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Product(String title, int price) {
@@ -69,6 +66,6 @@ public class Product {
 
     @Override
     public String toString() {
-        return String.format("Item [id = %id, title = '%s', price = %d, category = %c]", id,title,price, products_categories.get(0));
+        return String.format("Item [id = %id, title = '%s', price = %d, category = %c]", id,title,price, category);
     }
 }
