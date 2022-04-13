@@ -1,9 +1,7 @@
 package com.example.demo.entity;
 
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "gb_Category")
