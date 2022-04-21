@@ -5,6 +5,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity()
 @Table(name = "Users")
@@ -21,6 +22,17 @@ public class Users implements UserDetails {
     @PrimaryKeyJoinColumn
     @JoinColumn(name = "role_id")
     private Role role_id;
+
+    @OneToOne(mappedBy = "user")
+    private ShopCart shopCart;
+
+    public ShopCart getShopCart() {
+        return shopCart;
+    }
+
+    public void setShopCart(ShopCart shopCart) {
+        this.shopCart = shopCart;
+    }
 
     @Column(name = "password")
     private String password;

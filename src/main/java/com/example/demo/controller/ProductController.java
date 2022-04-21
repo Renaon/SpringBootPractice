@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.relational.core.sql.In;
@@ -14,6 +15,7 @@ import java.util.List;
 @Controller
 public class ProductController {
     private final ProductService productService = new ProductService();
+    private final CartService cartService = new CartService();
 
     @GetMapping("/")
 //    @ResponseBody
@@ -62,4 +64,19 @@ public class ProductController {
         model.addAttribute("products", product);
         return "category";
     }
+
+
+    //дописать 2 метода для отображения корзины и для добавления в корзину
+    @GetMapping("/cart")
+    public String getUserCart(Model model){
+
+        return "cart";
+    }
+
+    @GetMapping("/buy")
+    public String addProductToCart(Model model, @RequestParam String productTitle){
+
+        return "index";
+    }
+
 }

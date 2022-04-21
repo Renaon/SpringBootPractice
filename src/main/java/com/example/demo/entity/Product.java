@@ -1,10 +1,5 @@
 package com.example.demo.entity;
-
-import org.hibernate.annotations.Cascade;
-
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity(name = "Products")
 @Table(name = "Products")
@@ -23,6 +18,7 @@ public class Product {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "category_id")
     private Category category;
+
 
     public Category getCategory() {
         return category;
