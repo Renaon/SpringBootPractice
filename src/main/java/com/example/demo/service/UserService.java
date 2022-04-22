@@ -6,6 +6,11 @@ import com.example.demo.entity.Users;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.*;
@@ -18,6 +23,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -65,10 +71,6 @@ public class UserService implements UserDetailsService {
             session.close();
             throw new UsernameNotFoundException("User not found");
         }
-
-//        if (user == null) {
-//            throw new UsernameNotFoundException("User not found");
-//        }
         return user;
     }
 
