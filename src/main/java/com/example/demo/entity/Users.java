@@ -23,14 +23,17 @@ public class Users implements UserDetails {
     @JoinColumn(name = "role_id")
     private Role role_id;
 
-    @OneToOne(mappedBy = "user")
-    private ShopCart shopCart;
+    @ManyToMany
+    @JoinTable(name = "ShopCart",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    List<ShopCart> shopCart;
 
-    public ShopCart getShopCart() {
+    public List<ShopCart> getShopCart() {
         return shopCart;
     }
 
-    public void setShopCart(ShopCart shopCart) {
+    public void setShopCart(List<ShopCart> shopCart) {
         this.shopCart = shopCart;
     }
 

@@ -19,6 +19,10 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
+    @ManyToMany
+    @JoinTable(name = "ShopCart",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id"))
 
     public Category getCategory() {
         return category;

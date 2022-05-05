@@ -24,4 +24,13 @@ public class CartService {
     public static void main(String[] args) {
         new CartService().connect();
     }
+
+    public void buy(ShopCart cart) {
+        System.out.println("ID продукта" + cart.getProduct_id()
+         + " ID покупателя" + cart.getUser_id());
+        connect();
+        session.saveOrUpdate(cart);
+        session.getTransaction().commit();
+        session.close();
+    }
 }

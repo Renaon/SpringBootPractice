@@ -7,7 +7,7 @@ import java.util.List;
 @Table(name = "ShopCart")
 public class ShopCart {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -29,6 +29,11 @@ public class ShopCart {
 
     public ShopCart() {
     }
+
+//    public ShopCart(Integer user_id, Integer product_id) {
+//        this.user_id = user_id;
+//        this.product_id = product_id;
+//    }
 
     public Integer getUser_id() {
         return user_id;
