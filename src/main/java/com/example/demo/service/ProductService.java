@@ -2,14 +2,11 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
@@ -25,9 +22,6 @@ import static javax.transaction.Transactional.TxType.REQUIRES_NEW;
 
 @Service
 public class ProductService {
-    private static Connection connection;
-    private static Statement stmt;
-    private PreparedStatement preparedStatement;
     private Session session;
 
     public ProductService(){
@@ -72,24 +66,6 @@ public class ProductService {
         session.close();
     }
 
-    private int getSize() {
-        String result = null;
-        try {
-            if (!connection.isClosed()) {
-                preparedStatement = connection.prepareStatement(
-                        "select count(id) from \"Products\";"
-                );
-                ResultSet rs = preparedStatement.executeQuery();
-                while (rs.next()) {
-                    result = rs.getString("count(id)");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        assert result != null;
-        return Integer.parseInt(result);
-    }
 
     public List<Product> getAll() {
         try {
@@ -105,10 +81,6 @@ public class ProductService {
 
         TypedQuery allQuery = session.createQuery(all);
         List<Product> productList = allQuery.getResultList();
-//        Product[] products = new Product[productList.size()+1];
-//        for (Product product : productList){
-//            products[product.getId()] = product;
-//        }
         session.getTransaction().commit();
         session.close();
         return productList;
@@ -128,10 +100,6 @@ public class ProductService {
 
         TypedQuery allQuery = session.createQuery(all);
         List<Category> categoryList = allQuery.getResultList();
-//        Category[] categories = new Category[categoryList.size()+1];
-//        for (Category i : categoryList){
-//            categories[i.getId()] = i;
-//        }
         session.getTransaction().commit();
         session.close();
         return categoryList;
@@ -155,14 +123,10 @@ public class ProductService {
                         "\tON \n" +
                         "\t\tProducts.category_id = gb_Category.id\n" +
                         "WHERE\n" +
-                        "\tgb_Category.name = '" + category + "'";
-        Query query = session.createSQLQuery(stringQuery);
+                        "\tgb_Category.name = :category";
+        Query query = session.createSQLQuery(stringQuery).setParameter("category", category);
         List<Integer> result = query.getResultList();
         List<Product> products = new ArrayList<>();
-//        Product[] products = new Product[result.size()];
-//        for (int i = 0; i <result.size(); i++){
-//            products[i] = session.get(Product.class, result.get(i));
-//        }
         for (Integer i: result){
             products.add(session.get(Product.class, i));
         }
@@ -179,15 +143,13 @@ public class ProductService {
 //            e.printStackTrace();
 //        }
         try {
-            String stringQuery = "SELECT id FROM gb_Category WHERE name='" + name + "'";
-            Integer id = session.createQuery(stringQuery, Integer.class).getSingleResult();
+            String stringQuery = "SELECT id FROM gb_Category WHERE name=:name";
+            Integer id = session.createQuery(stringQuery, Integer.class)
+                    .setParameter("name", name).getSingleResult();
             return id;
         } catch (NoResultException e) {
             return 0;
         }
-
-
-//        session.getTransaction().commit();
 
     }
 

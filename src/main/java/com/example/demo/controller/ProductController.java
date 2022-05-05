@@ -2,18 +2,21 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
+import com.example.demo.entity.ShopCart;
+import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.relational.core.sql.In;
-import org.springframework.stereotype.Controller;
+import com.example.demo.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductController {
     private final ProductService productService = new ProductService();
+    private final CartService cartService = new CartService();
+    private final UserService userService = new UserService();
 
     @GetMapping("/")
 //    @ResponseBody
@@ -62,4 +65,13 @@ public class ProductController {
         model.addAttribute("products", product);
         return "category";
     }
+
+
+    //дописать 2 метода для отображения корзины и для добавления в корзину
+    @GetMapping("/buy")
+    public String addProductToCart(Model model, @RequestParam String id, Principal principal){
+
+        return getIndex(model);
+    }
+
 }
