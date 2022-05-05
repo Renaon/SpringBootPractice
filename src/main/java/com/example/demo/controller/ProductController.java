@@ -6,14 +6,13 @@ import com.example.demo.entity.ShopCart;
 import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
-@Controller
+@RestController
 public class ProductController {
     private final ProductService productService = new ProductService();
     private final CartService cartService = new CartService();
