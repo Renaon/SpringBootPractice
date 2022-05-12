@@ -8,7 +8,12 @@ import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.BufferedOutputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -34,7 +39,19 @@ public class ProductController {
     }
 
     @RequestMapping("/success")
-    public String pcessAddress(@ModelAttribute("form") Product product){
+    public String pcessAddress(@ModelAttribute("form") Product product,
+                               @RequestParam("name") String name,
+                               @RequestParam("file") MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(name));
+                stream.write(bytes);
+                stream.close();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         productService.addProduct(product);
         return "success";
     }

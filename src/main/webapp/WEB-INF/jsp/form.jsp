@@ -9,6 +9,11 @@
     <br>
 	<form:input path="category" type='text' placeholder="Раздел"/>
     <br>
+    File to upload: <input type="image" name="image"><br /> Name: <input
+                type="text" name="name"><br /> <br /> <input type="submit"
+                value="Upload"> Press here to upload the file!
+        <input type="submit" value="Submit" />
+    <br>
     <input type="submit" value="Submit" />
 </form:form>
 
