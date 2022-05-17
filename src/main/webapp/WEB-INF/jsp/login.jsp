@@ -1,3 +1,4 @@
+<%@page pageEncoding="UTF-8" %>
 <%@ include file="header.jsp" %>
 
 <!DOCTYPE html>

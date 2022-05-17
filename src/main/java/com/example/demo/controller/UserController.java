@@ -14,19 +14,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("user", new Users());
-        return "login";
-    }
-
-    @RequestMapping("/login_success")
-    public String login(@ModelAttribute("user") Users userForm){
-        if(userService.loginUser(userForm)) return "index";
-        else return "loginError";
-
-    }
-
     @GetMapping("/register")
     public String register(Model model){
         Users userForm = new Users();
