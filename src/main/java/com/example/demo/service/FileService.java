@@ -1,41 +1,42 @@
 package com.example.demo.service;
 
-import com.example.demo.exceptions.FileStorageException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-
+import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.io.FileOutputStream;
 
 @Service
 public class FileService {
 
-    @Value("${app.upload.dir:${user.home}}")
-    private String uploadPath;
+    private String path = "src/main/webapp/upload/logo/";
 
-    public void uploadFile(MultipartFile file){
-        try {
-            Path location = Paths.get(uploadPath + File.separator +
-                    StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), location, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new FileStorageException("Could not store file " + file.getOriginalFilename() +
-                    ". Please try again");
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        if (path.equals("default")) this.path = "src/main/webapp/upload/logo/";
+        this.path = path;
+    }
+
+    public boolean uploadFile(MultipartFile file){
+        if (!file.isEmpty()) {
+            try {
+                String name = file.getOriginalFilename();
+                byte[] bytes = file.getBytes();
+                BufferedOutputStream stream =
+                        new BufferedOutputStream(new FileOutputStream(new File(path
+                         + name)));
+                stream.write(bytes);
+                stream.close();
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 
-    public String getUploadPath() {
-        return uploadPath;
-    }
-
-    public void setUploadPath(String uploadPath) {
-        this.uploadPath = uploadPath;
-    }
 }

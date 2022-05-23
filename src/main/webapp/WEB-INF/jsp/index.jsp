@@ -9,9 +9,15 @@
 		<h1>Store</h1>
           <ul> Product     Price <br>
             <c:forEach var="item" items="${products}">
-				${item.image} ${item.title}   ${item.price}
-				<a href="/productdel?id=${item.id}" class="u-button-style u-nav-link">del</a> 
-				<a href="/buy?id=${item.id}" class="u-button-style u-nav-link">Добавить в корзину</a>
+				<table cellspacing="0">
+					<tr>
+						<td><img src="${item.logo_path}" width="256" height="256"/></td>
+						<td>${item.title}</td>
+						<td>${item.price}</td>
+						<td><a href="/productdel?id=${item.id}" class="u-button-style u-nav-link">del</a></td>
+						<td><a href="/buy?id=${item.id}" class="u-button-style u-nav-link">Добавить в корзину</a></td>
+					</tr>
+				</table>
 				<br>
             </c:forEach>
           </ul>

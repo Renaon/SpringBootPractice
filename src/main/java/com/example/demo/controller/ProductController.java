@@ -2,24 +2,16 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
-import com.example.demo.entity.ShopCart;
 import com.example.demo.service.CartService;
-import com.example.demo.service.FileService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import java.io.BufferedOutputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 public class ProductController {
@@ -27,7 +19,8 @@ public class ProductController {
     private  ProductService productService;
     private  CartService cartService;
     private  UserService userService;
-    private FileService fileService;
+
+    private Product product;
 
     @GetMapping("/")
 //    @ResponseBody
@@ -39,24 +32,25 @@ public class ProductController {
 
     @GetMapping("/add")
     public String add(Model model) {
-        Product product = new Product();
+        this.product = new Product();
         model.addAttribute("product", product);
         return "form";
     }
 
-    @RequestMapping("/success")
-    public @ResponseBody String pcessAddress(@ModelAttribute("form") Product product){
-        productService.addProduct(product);
-        return "success";
+    @GetMapping("/addWithLogo")
+    public String add(Model model, @RequestParam("filename") String filename) {
+//        Product product = new Product();
+        this.product.setLogo_path("src/main/webapp/upload/logo/" + filename);
+        System.out.println("addWithLogo: " + this.product.getLogo_path());
+        model.addAttribute("product", product);
+        return "form";
     }
 
-    @PostMapping("/uploadlogo")
-    public String uploadLogo(@RequestParam("file") MultipartFile file,
-                             RedirectAttributes redirectAttributes){
-        fileService.uploadFile(file);
-        redirectAttributes.addFlashAttribute("message",
-                "You successfully uploaded " + file.getOriginalFilename() + "!");
-        return "redirect:/add";
+    @PostMapping("/success")
+    public @ResponseBody String pcessAddress(Model model, @ModelAttribute("form") Product product){
+        product.setLogo_path(this.product.getLogo_path());
+        productService.addProduct(product);
+        return "success";
     }
 
     @GetMapping("/store")
