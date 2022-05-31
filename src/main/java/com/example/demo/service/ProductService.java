@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -14,6 +17,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.transaction.Transactional;
+import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +54,7 @@ public class ProductService {
         session.close();
     }
 
+    //Зачем нужна файлопомойка в интернет магазине. Мы лучше сделаем удаление логотипа одновременно с удалением товара
     public void dropProduct(Integer productId){
         try {
             connect();
@@ -61,6 +66,7 @@ public class ProductService {
         Category tmpCategory = new Category("temp");
         session.save(tmpCategory);
         tmp.setCategory(tmpCategory);
+        if(new File(tmp.getLogo_path()).delete()) System.out.println(tmp.getLogo_path() + " deleted");
         session.remove(tmp);
         session.getTransaction().commit();
         session.close();
@@ -151,6 +157,10 @@ public class ProductService {
             return 0;
         }
 
+    }
+
+    public Page<Product> listToPage(List<Product> products, Pageable pageable){
+        return new PageImpl<>(products, pageable, products.size());
     }
 
     @Bean

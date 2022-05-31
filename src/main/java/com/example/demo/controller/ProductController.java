@@ -6,6 +6,8 @@ import com.example.demo.service.CartService;
 import com.example.demo.service.ProductService;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -24,9 +26,10 @@ public class ProductController {
 
     @GetMapping("/")
 //    @ResponseBody
-    public String getIndex(Model model){
+    public String getIndex(Model model, Pageable pageable){
         List<Product> products = productService.getAll();
-        model.addAttribute("products", products);
+        Page page = productService.listToPage(products, pageable);
+        model.addAttribute("products", page);
         return "index";
      }
 
@@ -68,9 +71,10 @@ public class ProductController {
     }
 
     @GetMapping("productdel")
-    public String productdel(Model model, @RequestParam String id){
+    public String productdel(Model model, @RequestParam String id
+            , Pageable pageable){
         productService.dropProduct(Integer.parseInt(id));
-        return getIndex(model);
+        return getIndex(model, pageable);
     }
 
     @GetMapping("/category")
@@ -83,9 +87,10 @@ public class ProductController {
 
     //дописать 2 метода для отображения корзины и для добавления в корзину
     @GetMapping("/buy")
-    public String addProductToCart(Model model, @RequestParam String id, Principal principal){
+    public String addProductToCart(Model model, @RequestParam String id, Principal principal
+            , Pageable pageable){
 
-        return getIndex(model);
+        return getIndex(model, pageable);
     }
 
 }
