@@ -1,0 +1,34 @@
+package com.example.demo.entity;
+
+import lombok.Data;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "orders_item")
+@Data
+public class OrderItem {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
+
+    @Column(name = "quantity")
+    private Long quantity;
+
+    @Column(name = "item_price")
+    private Double itemPrice;
+
+    @Column(name = "total_price")
+    private Double totalPrice;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
+
+    @ManyToOne
+    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "cart_id")
+//    @JsonBackReference
+    private ShopCart order;
+}

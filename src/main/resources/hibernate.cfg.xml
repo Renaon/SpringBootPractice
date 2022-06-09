@@ -11,6 +11,8 @@
         <mapping class="com.example.demo.entity.Role"/>
         <mapping class="com.example.demo.entity.ShopCart"/>
         <mapping class="com.example.demo.entity.Users"/>
+        <mapping class="com.example.demo.entity.Category"/>
+        <mapping class="com.example.demo.entity.OrderItem"/>
     </session-factory>
 
 </hibernate-configuration>

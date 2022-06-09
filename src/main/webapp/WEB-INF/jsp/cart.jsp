@@ -2,11 +2,11 @@
 <%@ include file="header.jsp" %>
 
 
-	<body data-home-page="/" data-home-page-title="Главная" class="u-body u-xl-mode" modelAttribute="products">
+	<body data-home-page="/" data-home-page-title="Корзина" class="u-body u-xl-mode" modelAttribute="products">
     <section class="u-clearfix u-section-1" id="sec-4840">
       <div class="u-clearfix u-sheet u-sheet-1">
         <div class="u-clearfix u-custom-html u-expanded-width u-custom-html-1">
-		<h1>Store</h1>
+		<h1>Корзина</h1>
             <c:forEach var="item" items="${products}">
 				<table cellspacing="0">
 					<tr>
@@ -19,10 +19,10 @@
 				</table>
 				<br>
             </c:forEach>
+            <h2 modelAttribute="cart"> ИТОГО: ${cart.totalPrice}</h2>
           </ul>
         </div>
       </div>
     </section>
-    
+
 	<%@ include file="footer.jsp" %>
-    

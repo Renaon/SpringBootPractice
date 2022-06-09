@@ -1,11 +1,11 @@
 package com.example.demo.entity;
 
-import com.example.demo.service.UserService;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.List;
 
 @Entity()
 @Table(name = "Users")
@@ -20,8 +20,22 @@ public class Users implements UserDetails {
 
     @OneToOne
     @PrimaryKeyJoinColumn
-    @Column(name = "role_id")
-    private int role_id;
+    @JoinColumn(name = "role_id")
+    private Role role_id;
+
+    @ManyToMany
+    @JoinTable(name = "ShopCart",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "cart_id"))
+    List<ShopCart> shopCart;
+
+    public List<ShopCart> getShopCart() {
+        return shopCart;
+    }
+
+    public void setShopCart(List<ShopCart> shopCart) {
+        this.shopCart = shopCart;
+    }
 
     @Column(name = "password")
     private String password;
@@ -38,11 +52,11 @@ public class Users implements UserDetails {
         this.login = login;
     }
 
-    public int getRole_id() {
+    public Role getRole_id() {
         return role_id;
     }
 
-    public void setRole_id(int role_id) {
+    public void setRole_id(Role role_id) {
         this.role_id = role_id;
     }
 
@@ -61,7 +75,7 @@ public class Users implements UserDetails {
     public Users(String login, String password) {
         this.login = login;
         this.password = password;
-        this.role_id = 1;
+        this.role_id.setId(0);
     }
 
     public String getLogin() {

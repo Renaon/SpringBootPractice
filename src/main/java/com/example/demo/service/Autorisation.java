@@ -16,7 +16,8 @@ public class Autorisation {
                 .buildSessionFactory()
                 .getCurrentSession();
         session.beginTransaction();
-        Integer roleFromDB = session.createQuery("select id from role where name='" + role + "'", Integer.class).getSingleResult();
+        Integer roleFromDB = session.createQuery("select id from role where name=:role", Integer.class)
+                .setParameter("role", role).getSingleResult();
 //        int result = roleFromDB.getId();
         session.getTransaction().commit();
         return roleFromDB;
