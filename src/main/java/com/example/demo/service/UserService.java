@@ -88,6 +88,7 @@ public class UserService implements UserDetailsService {
         } catch (UsernameNotFoundException  e) {
             connect();
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
+            user.setRole_id(session.get(Role.class, 1));
             session.saveOrUpdate(user);
             session.getTransaction().commit();
             session.close();

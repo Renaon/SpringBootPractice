@@ -19,7 +19,7 @@ public class  Role implements GrantedAuthority {
     }
 
     public int getId() {
-        return id;
+        return this.id;
     }
 
     public void setId(int id) {
@@ -27,7 +27,7 @@ public class  Role implements GrantedAuthority {
     }
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public void setName(String name) {

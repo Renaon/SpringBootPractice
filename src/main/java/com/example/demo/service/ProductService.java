@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Scope;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -153,6 +156,19 @@ public class ProductService {
 
     }
 
+    public Product getProductById(int id){
+        try {
+            connect();
+            session.beginTransaction();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        Product response = session.get(Product.class, id);
+        session.getTransaction().commit();
+        session.close();
+        return response;
+    }
+
     @Bean
     @Scope("session")
     private void connect() throws SQLException {
@@ -163,4 +179,8 @@ public class ProductService {
                 .getCurrentSession();
     }
 
+    public Page<Product> listToPage(List<Product> products) {
+        Page<Product> page = new PageImpl<>(products);
+        return page;
+    }
 }

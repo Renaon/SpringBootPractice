@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
 import com.example.demo.entity.*;
+import com.example.demo.utils.ShoppingCart;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 @Service
 public class CartService {
@@ -32,5 +35,14 @@ public class CartService {
         session.saveOrUpdate(cart);
         session.getTransaction().commit();
         session.close();
+    }
+
+    public ShoppingCart getCart(HttpSession session){
+        ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+        if (cart == null) {
+            cart = new ShoppingCart();
+            session.setAttribute("cart", cart);
+        }
+        return cart;
     }
 }
